@@ -1,5 +1,6 @@
 const Usuario = require('../models/User');
 
+// Crear un nuevo usuario
 async function insertUser(userData) {
     try {
         const usuario = new Usuario(userData);
@@ -12,35 +13,65 @@ async function insertUser(userData) {
     }
 }
 
-// Función para obtener todos los usuarios (Read)
+// Obtener todos los usuarios
 async function getUsers() {
     try {
-        // Aqui lanzamos la consulta a la BBDD
         const usuarios = await Usuario.find();
         console.log('Usuarios:', usuarios);
+        return usuarios;
     } catch (err) {
         console.error('Error al obtener usuarios:', err);
+        throw err;
     }
 }
 
-// Función para actualizar un usuario (Update)
-async function updateUser(id, nombre, email) {
+// Actualizar un usuario
+async function updateUser(id, userData) {
     try {
-        const res = await Usuario.findByIdAndUpdate(id, { nombre, email }, { new: true });
-        console.log('Usuario actualizado:', res);
+        // Añadir fecha de última actualización
+        userData.ultimaActualizacion = new Date();
+        
+        const usuario = await Usuario.findByIdAndUpdate(
+            id,
+            userData,
+            { 
+                new: true,
+                runValidators: true // Ejecuta las validaciones del esquema
+            }
+        );
+
+        if (!usuario) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        console.log('Usuario actualizado:', usuario);
+        return usuario;
     } catch (err) {
         console.error('Error al actualizar usuario:', err);
+        throw err;
     }
 }
 
-// Función para eliminar un usuario (Delete)
+// Eliminar un usuario
 async function deleteUser(id) {
     try {
-        const res = await Usuario.findByIdAndDelete(id);
-        console.log('Usuario eliminado:', res);
+        const usuario = await Usuario.findByIdAndDelete(id);
+        
+        if (!usuario) {
+            throw new Error('Usuario no encontrado');
+        }
+
+        console.log('Usuario eliminado:', usuario);
+        return usuario;
     } catch (err) {
         console.error('Error al eliminar usuario:', err);
+        throw err;
     }
 }
 
-module.exports = { insertUser, getUsers, updateUser, deleteUser };
+module.exports = { 
+    insertUser, 
+    getUsers, 
+    updateUser, 
+    deleteUser 
+};
