@@ -45,6 +45,6 @@ const usuarioSchema = new mongoose.Schema({
 
 
 // Crear el modelo de usuario
-const Usuario = mongoose.model('Usuario', usuarioSchema);
+const Usuario = mongoose.model('Usuario', usuarioSchema); // Colección: usuarios
 
 module.exports = Usuario; 

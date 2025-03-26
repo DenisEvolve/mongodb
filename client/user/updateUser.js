@@ -1,9 +1,15 @@
 const updateUser = async () => {
-  const userId = '123'; // Reemplaza con el ID del usuario a actualizar
+  // Ejemplo de un ObjectId de MongoDB (24 caracteres hexadecimales)
+  const userId = '65f9e8b7c261e8b7c261e8b7'; // Reemplaza con el ObjectId real del usuario a actualizar
+  
   const userData = {
-    name: "Usuario Actualizado",
+    nombre: "Usuario Actualizado",
     email: "actualizado@ejemplo.com",
-    // Añade aquí los campos a actualizar
+    saldoEuros: 2000,
+    cuentaBancaria: "ES9876543210987654321098",
+    telefono: "+34987654321",
+    codigoDepartamento: "IT002",
+    codigoPostal: "28002"
   };
 
   try {
@@ -16,14 +22,15 @@ const updateUser = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(`Error HTTP: ${response.status}`);
+      const errorData = await response.json();
+      throw new Error(errorData.error || `Error en la petición HTTP: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log('Usuario actualizado:', data);
+    console.log('Usuario actualizado exitosamente:', data);
     return data;
   } catch (error) {
-    console.error('Error al actualizar usuario:', error);
+    console.error('Error al actualizar el usuario:', error);
     throw error;
   }
 };

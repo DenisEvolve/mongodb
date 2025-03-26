@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
     try {
-        await mongoose.connect('mongodb+srv://dnsjmnz:admin1234@cluster0.zspi3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
-        console.log('Database connected successfully');
+        await mongoose.connect('mongodb+srv://dnsjmnz:admin1234@cluster0.zspi3.mongodb.net/empresaDB?retryWrites=true&w=majority&appName=Cluster0');
+        console.log('Conexión a la base de datos establecida correctamente');
     } catch (error) {
-        console.error('Database connection error:', error);
+        console.error('Error al conectar con la base de datos:', error);
         process.exit(1);
     }
 };
