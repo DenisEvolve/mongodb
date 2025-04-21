@@ -1,9 +1,6 @@
 const app = require('./src/app');
 const connectDB = require('./src/config/database');
-
-const port = process.env.PORT || 3000; // 8800
-
-const localhost = process.env.HOST || 'localhost'; // 127.0.01
+const config = require('./config');
 
 // Función principal asíncrona
 const startServer = async () => {
@@ -13,7 +10,7 @@ const startServer = async () => {
 
         //Levantamos el servidor
         app.listen(port, () => {
-            console.log(`Servidor corriendo en http://${localhost}:${port}`);
+            console.log(`Servidor corriendo en http://${config.DB_HOST}:${config.PORT}`);
         });
 
     } catch(error) {
