@@ -37,7 +37,7 @@ const apiLimiter = rateLimit({ // ESTO SE LLAMA LIMITADOR
 //Toda mi API queda protegida de peticiones recurrentes excesivas
 app.use('/', apiLimiter);
   
-// Montamos las rutas en diferentes paths base
+// Montamos las rutas en diferentes paths
 app.use('/users', userRoutes);     // Todas las rutas de usuarios empezarán con /users
 app.use('/products', productRoutes); // Todas las rutas de productos empezarán con /products
 

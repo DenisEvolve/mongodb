@@ -1,6 +1,6 @@
 const deleteUser = async () => {
   // Ejemplo de un ObjectId de MongoDB (24 caracteres hexadecimales)
-  const userId = '65f9e8b7c261e8b7c261e8b7'; // Reemplaza con el ObjectId real del usuario a eliminar
+  const userId = '67e2d4c36dcb5153bdbc00e6'; // Reemplaza con el ObjectId real del usuario a eliminar
 
   try {
     const response = await fetch(`http://localhost:3000/users/${userId}`, {

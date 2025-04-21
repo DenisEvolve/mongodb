@@ -24,7 +24,7 @@ const userController = {
                 response.status(201).json(newUser);
             } catch(e) {
                 console.log('Error al crear usuario', e);
-                response.status(500).json({ error: e.message });
+                response.status(e.code).json({ error: e.message });
             }
         }
     ],
