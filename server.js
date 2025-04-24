@@ -35,6 +35,14 @@ const swaggerOptions = {
 
 const specs = swaggerJsdoc(swaggerOptions);
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // O especifica dominios: 'https://tudominio.com'
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
+
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -55,10 +63,6 @@ app.use('/api/products', productRoutes);
 // Documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// Ruta para la página principal
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 
 // Conexión a la base de datos
 connectDB();
