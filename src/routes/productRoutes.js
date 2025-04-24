@@ -1,5 +1,94 @@
 const express = require('express');
 const router = express.Router();
+const productController = require('../controllers/productController');
+
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: Obtiene todos los productos
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Lista de productos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ */
+router.get('/', productController.getProducts);
+
+/**
+ * @swagger
+ * /products:
+ *   post:
+ *     summary: Crea un nuevo producto
+ *     tags: [Products]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Product'
+ *     responses:
+ *       201:
+ *         description: Producto creado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ */
+router.post('/', productController.createProduct);
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   put:
+ *     summary: Actualiza un producto existente
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del producto
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Product'
+ *     responses:
+ *       200:
+ *         description: Producto actualizado exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ */
+router.put('/:id', productController.updateProduct);
+
+/**
+ * @swagger
+ * /products/{id}:
+ *   delete:
+ *     summary: Elimina un producto
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del producto
+ *     responses:
+ *       200:
+ *         description: Producto eliminado exitosamente
+ */
+router.delete('/:id', productController.deleteProduct);
 
 // GET /products con filtros múltiples
 // GET /products?category=electronics&minPrice=100&maxPrice=500&sort=price&order=desc
@@ -45,17 +134,6 @@ router.get('/categories/:mainCategory?', (req, res) => {
     }
 });
 
-// POST /products para crear nuevo producto
-router.post('/', (req, res) => {
-    const { name, price, category, description, stock } = req.body;
-    res.send(`Creando nuevo producto:
-        Nombre: ${name || 'No especificado'}
-        Precio: ${price || 'No especificado'}
-        Categoría: ${category || 'No especificada'}
-        Descripción: ${description || 'No especificada'}
-        Stock: ${stock || 'No especificado'}`);
-});
-
 // GET /products/:id/reviews con filtros
 // GET /products/:id/reviews?rating=5&sort=date
 router.get('/:id/reviews', (req, res) => {
@@ -82,17 +160,6 @@ router.post('/:id/reviews', (req, res) => {
         Usuario: ${userName || 'Anónimo'}
         Puntuación: ${rating || 'No especificada'}
         Comentario: ${comment || 'Sin comentario'}`);
-});
-
-// PUT /products/:id para actualizar producto
-router.put('/:id', (req, res) => {
-    const { id } = req.params;
-    const { price, stock, description } = req.body;
-    
-    res.send(`Actualizando producto ${id}:
-        ${price ? `\nNuevo precio: ${price}` : ''}
-        ${stock ? `\nNuevo stock: ${stock}` : ''}
-        ${description ? `\nNueva descripción: ${description}` : ''}`);
 });
 
 // GET /products/search con búsqueda avanzada

@@ -42,6 +42,19 @@ const userController = {
                 response.status(500).json({ error: 'Error al actualizar usuario' });
             }
         }
+    ],
+
+    deleteUser: [
+        async (req, response) => {
+            try {
+                const { id } = req.params;
+                const deletedUser = await deleteUser(id);
+                response.status(200).json(deletedUser);
+            } catch(e) {
+                console.log('Error al eliminar usuario', e);
+                response.status(500).json({ error: 'Error al eliminar usuario' });
+            }
+        }
     ]
 };
 
