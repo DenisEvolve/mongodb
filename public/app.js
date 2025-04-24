@@ -1,5 +1,7 @@
 // Variables globales
-const API_URL = 'https://mongodb-lrzi.onrender.com/api';
+const API_URL = 'http://localhost:3000/api';
+//const API_URL = 'https://mongodb-lrzi.onrender.com/api';
+
 let currentSection = 'users';
 
 // Elementos del DOM
